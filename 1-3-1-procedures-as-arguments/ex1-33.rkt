@@ -24,18 +24,28 @@
               (if (pred a) (combiner mem (term a)) mem))))
   (iter a null-value))
 
-;(define (prime-square-sum a b)
-;  (filtered-accumulate-iter
-;   (lambda (a b) (+ a b))
-;   0
-;   (lambda (x) (* x x))
-;   a
-;   (lambda (k) (+ k 1))
-;   b
-;   (lambda (x) (prime? x)))) ; the definition of prime? is missing
+(define (prime? n)
+  (define (test-iter? k)
+    (if ( > (- (* 6 k) 1) (sqrt n)) true
+        (cond ((= (remainder n (- (* 6 k) 1)) 0) false)
+              ((= (remainder n (+ (* 6 k) 1)) 0) false)
+              (else (test-iter? (+ k 1))))))
+  (cond ((or (= n 2) (= n 3)) true)
+        ((or (= (remainder n 2) 0) (= (remainder n 3) 0)) false)
+        (else (test-iter? 1))))
+
+(define (prime-square-sum a b)
+  (filtered-accumulate-iter
+   (lambda (a b) (+ a b))
+   0
+   (lambda (x) (* x x))
+   a
+   (lambda (k) (+ k 1))
+   b
+   (lambda (x) (prime? x))))
 
 (define (relative-prime-product n)
-  (filtered-accumulate ; change to iterative version
+  (filtered-accumulate ; change here to use iterative version
    (lambda (a b) (* a b))
    1
    (lambda (x) x)
