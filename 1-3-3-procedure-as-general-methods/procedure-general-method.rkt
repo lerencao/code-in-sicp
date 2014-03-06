@@ -31,6 +31,8 @@
 (define (fixed-point f first-guess)
   (define (close-enough? x y) (< (abs (- x y)) tolerance))
   (define (try guess)
+    (display guess)
+    (newline)
     (let ((next-guess (f guess)))
       (if (close-enough? next-guess guess)
           next-guess
@@ -51,5 +53,15 @@
 ;;; exercise 1.35
 ;;; f(x) = 1+ 1/x = x
 ;;; equavalent to x^2 - x - 1 = 0, whose root are golden ratio
-(define golden-ratio
+(define (golden-ratio)
   (fixed-point (lambda (x) (+ (/ 1.0 x) 1)) 1))
+
+;;; exercise 1.36
+;;; start with 10
+(define (log-solution)
+  (fixed-point (lambda (x) (/ (log 1000) (log x))) 10))
+(define (log-solution-with-ad)
+  (fixed-point
+   (lambda (x) (/ (+ x (/ (log 1000) (log x))) 2.0))
+   10))
+;;; with average damping, the steps is decreased.
