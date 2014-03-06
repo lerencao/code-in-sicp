@@ -47,3 +47,9 @@
 (define (sqrt x)
   (define (average x y) (/ (+ x y) 2.0))
   (fixed-point (lambda (y) (average y (/ x y))) 1.0))
+
+;;; exercise 1.35
+;;; f(x) = 1+ 1/x = x
+;;; equavalent to x^2 - x - 1 = 0, whose root are golden ratio
+(define golden-ratio
+  (fixed-point (lambda (x) (+ (/ 1.0 x) 1)) 1))
