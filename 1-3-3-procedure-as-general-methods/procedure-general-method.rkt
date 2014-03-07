@@ -65,3 +65,31 @@
    (lambda (x) (/ (+ x (/ (log 1000) (log x))) 2.0))
    10))
 ;;; with average damping, the steps is decreased.
+
+;;; exercise 1.37
+(define (k-term-cont-frac n d k)
+  (define (iter mem k)
+    (if (= k 0)
+        mem
+        (iter (/ (n k) (+ (d k) mem)) (- k 1))))
+  (iter 0 k))
+
+;; accurate to 4 decimal places
+(define accuratcy 0.0001)
+(define (close-enough? x1 x2) (< (abs (- x1 x2)) accuratcy))
+(define (accurated-cont-frac-k n d)
+  (define (iter prev k)
+    (let ((cur (k-term-cont-frac n d k)))
+      (if (close-enough? prev (k-term-cont-frac n d k))
+          k
+        (iter cur (+ k 1)))))
+  (iter 0 1))
+; the result for golden ratio is 11.
+
+;;; recursive version of k term continued fraction
+(define (k-term-cont-frac-recur n d k)
+  (define (iter i)
+    (if (= i k)
+        (/ (n i) (d i))
+        (/ (n i) (+ (d i) (iter (+ i 1))))))
+  (iter 1))
