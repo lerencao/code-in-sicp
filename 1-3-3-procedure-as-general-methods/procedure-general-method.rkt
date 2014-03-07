@@ -93,3 +93,14 @@
         (/ (n i) (d i))
         (/ (n i) (+ (d i) (iter (+ i 1))))))
   (iter 1))
+
+;;; exercise 1.38
+(define (cont-frac-e)
+  (+ 2
+     (k-term-cont-frac-recur
+      (lambda (n) 1.0)
+      (lambda (d)
+        (if (= (remainder (+ d 1) 3) 0)
+            (* (/ (+ d 1) 3) 2.0)
+            1))
+      50)))
