@@ -104,3 +104,11 @@
             (* (/ (+ d 1) 3) 2.0)
             1))
       50)))
+
+;;; exercise 1.39
+(define (tan-cf x k)
+  (- (k-term-cont-frac-recur
+      (lambda (n) (- (expt x n)))
+      (lambda (d) (- (* 2 d) 1))
+      k)))
+; (tan-cf (/ 3.14 4) 50)
