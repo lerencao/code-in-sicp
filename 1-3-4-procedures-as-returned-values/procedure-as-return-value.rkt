@@ -48,3 +48,8 @@
   (fixed-point-of-transform
    (lambda (y) (- (* y y) x))
    newton-transform 1.0))
+
+;;; exercise 1.40
+(define (cubic a b c)
+  (lambda (x) (+ (* x x x) (* a x x) (* b x) c)))
+; (newton-method (cubic 1 1 1) 1) => -0.9999999999997796
