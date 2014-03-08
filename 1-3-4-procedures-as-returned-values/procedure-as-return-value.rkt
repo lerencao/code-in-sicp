@@ -65,3 +65,9 @@
 ;((compose
 ;  (lambda (x) (* x x))
 ;  (lambda (x) (+ x 1))) 6) => 49
+
+;;; exercise 1.43
+(define (repeated f n)
+  (if (= n 1) f
+      (repeated (lambda (x) ((compose f f) x)) (- n 1))))
+; ((repeated (lambda (x) (* x x)) 2) 5) => 625
