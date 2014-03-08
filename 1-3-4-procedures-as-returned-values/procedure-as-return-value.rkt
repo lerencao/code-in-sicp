@@ -53,3 +53,8 @@
 (define (cubic a b c)
   (lambda (x) (+ (* x x x) (* a x x) (* b x) c)))
 ; (newton-method (cubic 1 1 1) 1) => -0.9999999999997796
+
+;;; exercise 1.41
+(define (double f)
+  (lambda (x) (f (f x))))
+; (((double (double double)) inc) 5) =>  21
