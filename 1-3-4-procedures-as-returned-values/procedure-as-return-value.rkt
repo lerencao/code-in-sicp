@@ -58,3 +58,10 @@
 (define (double f)
   (lambda (x) (f (f x))))
 ; (((double (double double)) inc) 5) =>  21
+
+;;; exercise 1.42
+(define (compose f g)
+  (lambda (x) ( f (g x))))
+;((compose
+;  (lambda (x) (* x x))
+;  (lambda (x) (+ x 1))) 6) => 49
