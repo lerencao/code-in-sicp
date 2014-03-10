@@ -71,3 +71,11 @@
   (if (= n 1) f
       (repeated (lambda (x) ((compose f f) x)) (- n 1))))
 ; ((repeated (lambda (x) (* x x)) 2) 5) => 625
+
+;;; exercise 1.44
+; TODO: waht's the ponit of it and how to chcek it?
+(define (smooth-fn f)
+  (define dx 0.00001)
+  (lambda (x) (/ (+ (f x) (f (- x dx)) (f (+ x dx))) 3)))
+(define (n-fold-smooth-fn f n)
+  (repeated (smooth-fn f) n))
