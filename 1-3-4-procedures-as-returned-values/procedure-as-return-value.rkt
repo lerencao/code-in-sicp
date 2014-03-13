@@ -92,3 +92,23 @@
                   damp-times
                   (lambda (y) (/ x (expt y (- n 1)))))
                  1.0)))
+
+;; exercise 1.46
+(define (iterative-improve good-enough? improve)
+  (define (iter guess)
+    (let ((next (improve guess)))
+      (if (good-enough? guess next) next
+        (iter next))))
+  iter)
+(define (sqrt-iterative x)
+  (define tolerance 0.00001)
+  ((iterative-improve (lambda (guess next) (< (abs (- guess next)) tolerance))
+                      (lambda (guess) (/ (+ guess (/ x guess)) 2.0)))
+   1.0))
+; (sqrt-iterative 4)
+(define (fix-point-iterative f first-guess)
+  (define tolerance 0.00001)
+  ((iterative-improve (lambda (guess next) (< (abs (- guess next)) tolerance))
+                      (lambda (guess) (f guess)))
+   first-guess))
+; (fix-point-iterative cos 1.0)
