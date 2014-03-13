@@ -79,3 +79,16 @@
   (lambda (x) (/ (+ (f x) (f (- x dx)) (f (+ x dx))) 3)))
 (define (n-fold-smooth-fn f n)
   (repeated (smooth-fn f) n))
+
+;; exercise 1.45
+(define (lg n)
+  (if (< (/ n 2) 1) 0
+      (+ 1 (lg (/ n 2)))))
+(define (n-root n x)
+  (define (average-damp-m-times m f)
+    ((repeated average-damp m) f))
+  (let ((damp-times (lg n)))
+    (fixed-point (average-damp-m-times
+                  damp-times
+                  (lambda (y) (/ x (expt y (- n 1)))))
+                 1.0)))
