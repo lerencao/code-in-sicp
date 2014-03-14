@@ -255,3 +255,6 @@
 (define B (make-center-percent 20 0.002))
 (par1 A B)
 (par2 A B)
+
+;; exercise 2.15
+; because an uncertain elem will be amplified if repeated
