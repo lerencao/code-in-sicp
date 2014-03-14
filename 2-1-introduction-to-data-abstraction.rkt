@@ -68,3 +68,12 @@
       (if (< (* ln ld) 0)
           (make-rat (- (abs ln)) (abs ld))
           (make-rat (abs ln) (abs ld))))))
+
+;;; 2.1.2 Abstraction Barriers
+(define (make-rat-abs n d) (cons n d))
+(define (numer-abs x)
+  (let ((g (gcd (car x) (cdr x))))
+    (/ (car x) g)))
+(define (denom-abs x)
+  (let ((g (gcd (car x) (cdr x))))
+    (/ (cdr x) g)))
