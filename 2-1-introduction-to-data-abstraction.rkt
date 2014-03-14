@@ -258,3 +258,6 @@
 
 ;; exercise 2.15
 ; because an uncertain elem will be amplified if repeated
+
+;; exercise 2.16
+; TODO
