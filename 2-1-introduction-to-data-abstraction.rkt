@@ -235,3 +235,6 @@
   (define (width i)
     (/ (- (upper-bound i) (lower-bound i)) 2.0))
   (/ width center))
+
+;; exercise 2.13
+; p = (p1+p2)/(1+p1p2)
