@@ -59,3 +59,12 @@
 (define (make-rat-reduced n d)
   (let ((g (gcd n d)))
     (cons (/ n g) (/ d g))))
+
+; exercise 2.1
+(define (make-rat-better n d)
+  (let ((g (gcd (abs n) (abs d))))
+    (let ((ln (/ n g))
+          (ld (/ d g)))
+      (if (< (* ln ld) 0)
+          (make-rat (- (abs ln)) (abs ld))
+          (make-rat (abs ln) (abs ld))))))
