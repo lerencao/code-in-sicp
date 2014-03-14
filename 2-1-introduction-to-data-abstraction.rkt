@@ -172,3 +172,9 @@
 (define (make-interval a b) (cons a b))
 (define (upper-bound x) (cdr x))
 (define (lower-bound x) (car x))
+
+;; exercise 2.8
+(define (sub-interval x y)
+  (let ((p1 (- (lower-bound x) (upper-bound y)))
+        (p2 (- (upper-bound x) (lower-bound y))))
+    (make-interval p1 p2)))
