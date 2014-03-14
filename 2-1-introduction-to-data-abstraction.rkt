@@ -178,3 +178,10 @@
   (let ((p1 (- (lower-bound x) (upper-bound y)))
         (p2 (- (upper-bound x) (lower-bound y))))
     (make-interval p1 p2)))
+
+;; exercise 2.9
+(define (width-interval x)
+  (/ (- (upper-bound x) (lower-bound x)) 2))
+(define (width-sum x y)
+  (+ (width-interval x) (width-interval y)))
+(define width-sub width-sum)
