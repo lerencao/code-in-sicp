@@ -129,3 +129,8 @@
     dispatch)
 (define (car-alt z) (z 0))
 (define (cdr-alt z) (z 1))
+
+;; exercise 2.4
+(define (cons-aalt x y) (lambda (m) (m x y)))
+(define (car-aalt z) (z (lambda (p q) p)))
+(define (cdr-aalt z) (z (lambda (p q) q)))
