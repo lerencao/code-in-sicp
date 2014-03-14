@@ -99,3 +99,21 @@
   (display ",")
   (display (y-point p))
   (display ")"))
+
+;; exercise 2.3
+
+(define (perimeter rectangle)
+  (* (+ (length rectangle) (width rectangle)) 2))
+(define (area rectangle)
+  (* (length rectangle) (width rectangle)))
+
+(define (mk-rectangle l-seg w-seg)
+  (cons l-seg w-seg))
+(define (length rectangle)
+  (let ((a (start-segment (car rectangle)))
+        (b (end-segment (car rectangle))))
+    (- (x-point b) (x-point a))))
+(define (width rectangle)
+  (let ((a (start-segment (cdr rectangle)))
+        (d (end-segment (cdr rectangle))))
+    (- (y-point d) (y-point a))))
