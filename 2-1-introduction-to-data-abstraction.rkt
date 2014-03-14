@@ -167,3 +167,8 @@
   (mul-interval x
                 (make-interval (/ 1.0 (upper-bound y))
                                (/ 1.0 (lower-bound y)))))
+
+;; exercise 2.7
+(define (make-interval a b) (cons a b))
+(define (upper-bound x) (cdr x))
+(define (lower-bound x) (car x))
