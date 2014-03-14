@@ -224,3 +224,14 @@
 
 ;; exercise 2.11
 ; see the definition of mul-interval
+
+;; exercise 2.12
+(define (make-center-percent center percentage)
+  (make-interval (* center (+ 1 percentage))
+                 (* center (- 1 percentage))))
+(define (center i)
+  (/ (+ (lower-bound i) (upper-bound i)) 2.0))
+(define (percent i)
+  (define (width i)
+    (/ (- (upper-bound i) (lower-bound i)) 2.0))
+  (/ width center))
