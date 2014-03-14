@@ -134,3 +134,12 @@
 (define (cons-aalt x y) (lambda (m) (m x y)))
 (define (car-aalt z) (z (lambda (p q) p)))
 (define (cdr-aalt z) (z (lambda (p q) q)))
+
+;; exercise 2.5
+(define (int-cons a b) (* (expt 2 a) (expt 3 b)))
+(define (int-car z)
+  (if (not (= (remainder z 2) 0)) 0
+      (+ 1 (int-car (/ z 2)))))
+(define (int-cdr z)
+  (if (not (= (remainder z 3) 0)) 0
+      (+ 1 (int-cdr (/ z 3)))))
