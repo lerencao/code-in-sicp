@@ -143,3 +143,12 @@
 (define (int-cdr z)
   (if (not (= (remainder z 3) 0)) 0
       (+ 1 (int-cdr (/ z 3)))))
+
+;; exercise 2.6
+(define zero (lambda (f) (lambda (x) x)))
+(define (add-1 n)
+  (lambda (f) (lambda (x) (f ((n f) x)))))
+(define one (lambda (f) (lambda (x) (f x))))
+(define two (lambda (f) (lambda (x) (f (f x)))))
+(define (add m n)
+  (lambda (f) (lambda (x) ((m f) ((n f) x)))))
