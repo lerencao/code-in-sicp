@@ -117,3 +117,15 @@
   (let ((a (start-segment (cdr rectangle)))
         (d (end-segment (cdr rectangle))))
     (- (y-point d) (y-point a))))
+
+
+;; 2.1.3 What is meant by data
+; procedural representations of data and message passing
+(define (cons-alt x y)
+  (define (dispatch m)
+    (cond ((= m 0) x)
+          ((= m 1) y)
+          (else (error "Argument not 0 or 1: CONS" m))))
+    dispatch)
+(define (car-alt z) (z 0))
+(define (cdr-alt z) (z 1))
