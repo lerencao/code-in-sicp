@@ -238,3 +238,20 @@
 
 ;; exercise 2.13
 ; p = (p1+p2)/(1+p1p2)
+
+;; exercise 2.14
+(define (par1 r1 r2)
+  (div-interval (mul-interval r1 r2) (add-interval r1 r2)))
+(define (par2 r1 r2)
+  (let ((one (make-interval 1 1)))
+    (div-interval one (add-interval
+                       (div-interval one r1)
+                       (div-interval one r2)))))
+; run the follows two expressions, and get different results
+; (par1 (make-interval 10 15) (make-interval 15 20))
+; (par2 (make-interval 10 15) (make-interval 15 20))
+
+(define A (make-center-percent 10 0.001))
+(define B (make-center-percent 20 0.002))
+(par1 A B)
+(par2 A B)
