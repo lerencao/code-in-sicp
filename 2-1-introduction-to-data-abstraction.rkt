@@ -164,9 +164,10 @@
         (p4 (* (upper-bound x) (upper-bound y))))
     (make-interval (min p1 p2 p3 p4) (max p1 p2 p3 p4))))
 (define (div-interval x y)
-  (mul-interval x
-                (make-interval (/ 1.0 (upper-bound y))
-                               (/ 1.0 (lower-bound y)))))
+  (if (= (upper-bound y) (lower-bound y))
+      (error "interval spans zero")
+      (mul-interval x (make-interval (/ 1.0 (upper-bound y))
+                                     (/ 1.0 (lower-bound y))))))
 
 ;; exercise 2.7
 (define (make-interval a b) (cons a b))
@@ -185,3 +186,6 @@
 (define (width-sum x y)
   (+ (width-interval x) (width-interval y)))
 (define width-sub width-sum)
+
+;; exercise 2.10
+; see the definition of div-interval
