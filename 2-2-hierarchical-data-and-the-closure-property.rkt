@@ -186,3 +186,11 @@
              (proc sub-tree)))
        tree))
 ; (scale-tree-map (lambda (x) (* x 2)) '(1 (2 3) (4 5) 2))
+
+;; exercise 2.30
+(define (direct-square-tree tree)
+  (scale-tree tree 2))
+;(direct-square-tree '((1 2) (3 (4 5)) 6))
+(define (map-square-tree tree)
+  (scale-tree-map tree (lambda (x) (* x 2))))
+;(map-square-tree '((1 2) (3 (4 5)) 6))
