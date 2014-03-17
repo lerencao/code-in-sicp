@@ -38,3 +38,9 @@
   (if (null? ls1)
       ls2
       (cons (car ls1) (append (cdr ls1) ls2))))
+
+;; exercise 2.17
+(define (last-pair ls)
+  (cond ((null? ls) (error "empty list"))
+        ((null? (cdr ls)) ls)
+        (else (last-pair (cdr ls))))) ;(last-pair (list 1 2))
