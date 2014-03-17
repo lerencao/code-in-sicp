@@ -83,3 +83,12 @@
   (if (null? ls) nil
       (cons (proc (car ls))
             (map proc (cdr ls))))) ;(map (lambda (x) (* x 2)) (list 1 2 3))
+
+;;exercise 2.21
+(define (square-list ls)
+  (if (null? ls) nil
+      (cons (* (car ls) (car ls))
+            (square-list (cdr ls)))))
+(define (square-list-map ls)
+  (map (lambda (x) (* x x)) ls))
+; (square-list-map '(1 2 3))
