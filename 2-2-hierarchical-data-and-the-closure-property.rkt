@@ -201,3 +201,51 @@
       (let ((left (subsets (cdr s))))
         (append left (map (lambda (ls) (cons (car s) ls)) left)))))
 ;(subsets '(1 2 3))
+
+;;; 2.2.3 sequences as conventional interfaces
+(define (sum-odd-squares tree)
+  (cond ((null? tree) 0)
+        ((not (pair? tree))
+         (if (odd? tree) (* tree tree) 0))
+        (else (+ (sum-odd-squares (car tree))
+                 (sum-odd-squares (cdr tree))))))
+
+(define (fib n)
+  (define (iter a b k)
+    (if (= k 0) a
+        (iter (+ a b) a (- k 1))))
+  (iter 0 1 n))
+(define (even-fibs n)
+  (define (iter k)
+    (if (> k n) nil
+        (let ((f (fib k)))
+          (if (even? f)
+              (cons f (iter (+ k 1)))
+              (iter (+ k 1))))))
+  (iter 0))
+
+; use map, filter, accumulate to abstract the process
+(define (filter predicate sequence)
+  (cond ((null? sequence) nil)
+        ((predicate (car sequence))
+         (cons (car sequence)
+               (filter predicate (cdr sequence))))
+        (else (filter predicate (cdr sequence)))))
+(define (accumulate op init seq)
+  (if (null? seq) init
+      (op (car seq)
+          (accumulate op init (cdr seq)))))
+
+(define (enumerate-interval low high)
+  (if (> low high) nil
+      (cons low (enumerate-interval (+ low 1) high))))
+(define (enumerate-tree tree)
+  (fringe tree)) ; use exercise 2.28
+(define (sum-odd-squares-fn tree)
+  (accumulate + 0 (map (lambda (x) (* x x))
+                       (filter odd? (enumerate-tree tree)))))
+(define (even-fibs-fn n)
+  (accumulate cons nil (filter even?
+                               (map fib (enumerate-interval 0 n)))))
+;(sum-odd-squares-fn '(1 2 (3 4) (5 6)))
+;(even-fibs-fnl 9)
