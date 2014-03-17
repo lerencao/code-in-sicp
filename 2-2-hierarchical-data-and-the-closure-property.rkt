@@ -311,3 +311,12 @@
 ;(define n '((2 1) (2 1) (2 1)))
 ;(matrix-*-matrix m n)
 ;(transpose m)
+
+; exercise 2.38
+(define (fold-left op initial sequence)
+  (define (iter result rest)
+    (if (null? rest) result
+        (iter (op result (car rest)) (cdr rest))))
+  (iter initial sequence))
+; the position of arguments of op doesn't affect the result.
+; that's (op a b) = (op b a)
