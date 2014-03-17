@@ -67,3 +67,13 @@
 ; (cc 100 us-coins)
 ; (cc 100 (list 5 10 1 25 50))
 ; the order of coin list doesn't affect the output of function cc
+
+; exercise 2.20
+(define (same-parity l . ls)
+  (define (iter elems res)
+    (if (null? elems)
+        res
+        (if (= (remainder (- (car elems) l) 2) 0)
+            (iter (cdr elems) (cons (car elems) res))
+            (iter (cdr elems) res))))
+  (reverse (iter ls (list l)))) ;(same-parity 1 2 3 4 5 6)
