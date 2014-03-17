@@ -194,3 +194,10 @@
 (define (map-square-tree tree)
   (scale-tree-map tree (lambda (x) (* x 2))))
 ;(map-square-tree '((1 2) (3 (4 5)) 6))
+
+; exercise 2.32
+(define (subsets s)
+  (if (null? s) (list nil)
+      (let ((left (subsets (cdr s))))
+        (append left (map (lambda (ls) (cons (car s) ls)) left)))))
+;(subsets '(1 2 3))
