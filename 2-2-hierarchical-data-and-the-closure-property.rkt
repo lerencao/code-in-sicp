@@ -51,3 +51,19 @@
       nil
       (append (reverse (cdr ls))
               (list (car ls))))) ;(reverse (list 1 2))
+
+;; exercise 2.19
+(define us-coins (list 50 25 10 5 1))
+(define uk-coins (list 100 50 20 10 5 2 1 0.5))
+(define (cc amounts coin-values)
+  (define no-more? null?)
+  (define first-denomination car)
+  (define except-first-denomination cdr)
+  (cond ((= amounts 0) 1)
+        ((or (< amounts 0) (no-more? coin-values)) 0)
+        (else
+         (+ (cc (- amounts (first-denomination coin-values)) coin-values)
+            (cc amounts (except-first-denomination coin-values))))))
+; (cc 100 us-coins)
+; (cc 100 (list 5 10 1 25 50))
+; the order of coin list doesn't affect the output of function cc
