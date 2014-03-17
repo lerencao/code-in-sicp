@@ -249,3 +249,14 @@
                                (map fib (enumerate-interval 0 n)))))
 ;(sum-odd-squares-fn '(1 2 (3 4) (5 6)))
 ;(even-fibs-fnl 9)
+
+;; exercise 2.33
+(define (map-acc p sequence)
+  (accumulate (lambda (x y) (cons (p x) y)) nil sequence))
+;(map-acc (lambda (x) (* x 2)) '(1 2 3))
+(define (append-acc seq1 seq2)
+  (accumulate cons seq2 seq1))
+;(append-acc '(1 2 3) '(4 5 6))
+(define (length-acc sequence)
+  (accumulate (lambda (x y) (+ y 1)) 0 sequence))
+;(length-acc '(1 2 3))
