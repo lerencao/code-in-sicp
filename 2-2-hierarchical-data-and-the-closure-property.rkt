@@ -276,3 +276,11 @@
                  (if (not (pair? sub-tree)) 1
                      (count-leaves-acc sub-tree)))
                t)))
+
+; exercise 2.36
+(define (accumulate-n op init seqs)
+  (if (null? (car seqs))
+      nil
+      (cons (accumulate op init (map (lambda (ls) (car ls)) seqs))
+            (accumulate-n op init (map (lambda (ls) (cdr ls)) seqs)))))
+; (accumulate-n + 0 '((1 2 3) (4 5 6) (7 8 9) (10 11 12)))
