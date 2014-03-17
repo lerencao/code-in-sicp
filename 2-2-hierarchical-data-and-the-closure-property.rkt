@@ -145,3 +145,28 @@
                       (fringe (cdr tree))))))
 ; (fringe '((1 2) (3 4)))
 ; (fringe '(((1 2) (3 4)) ((1 2) (3 4))))
+
+;; exercise 2.29
+
+(define (make-mobile left right) (list left right))
+(define (left-branch mobile) (car mobile))
+(define (right-branch mobile) (cadr mobile))
+(define (make-branch length structure) (list length structure))
+(define (branch-length br) (car br))
+(define (branch-structure br) (cadr br))
+
+(define (total-weight mobile)
+  (if (null? mobile) mobile
+      (+ (total-weight (left-branch mobile))
+         (total-weight (right-branch mobile)))))
+
+(define (torque branch)
+  (* (branch-length branch)
+     (total-weight (branch-structure branch))))
+(define (balanced? mobile)
+  (cond ((not (pair? mobile)) true)
+        ((and (= (torque (left-branch mobile)) (torque (right-branch mobile)))
+              (balanced? (branch-structure (left-branch mobile)))
+              (balanced? (branch-structure (right-branch mobile))))
+         true)
+        (else false)))
