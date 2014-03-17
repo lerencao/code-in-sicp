@@ -170,3 +170,19 @@
               (balanced? (branch-structure (right-branch mobile))))
          true)
         (else false)))
+
+;; mapping over trees
+(define (scale-tree tree factor)
+  (cond ((null? tree) nil)
+        ((not (pair? tree)) (* tree factor))
+        (else (cons (scale-tree (car tree) factor)
+                    (scale-tree (cdr tree) factor)))))
+; (scale-tree '(1 (2 3) (4 5) 2) 2)
+
+(define (scale-tree-map tree proc)
+  (map (lambda (sub-tree)
+         (if (pair? sub-tree)
+             (scale-tree-map sub-tree proc)
+             (proc sub-tree)))
+       tree))
+; (scale-tree-map (lambda (x) (* x 2)) '(1 (2 3) (4 5) 2))
