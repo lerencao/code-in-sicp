@@ -320,3 +320,10 @@
   (iter initial sequence))
 ; the position of arguments of op doesn't affect the result.
 ; that's (op a b) = (op b a)
+(define fold-right accumulate)
+
+; exercise 2.39
+(define (reverse-r sequence)
+  (fold-right (lambda (x y) (append y (list x))) nil sequence))
+(define (reverse-l sequence)
+  (fold-left (lambda (x y) (cons y x)) nil sequence))
