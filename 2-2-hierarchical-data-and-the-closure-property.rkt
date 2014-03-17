@@ -267,3 +267,12 @@
               0
               coeffs))
 ; (horner-eval 2 '(1 3 0 5 0 1))
+
+; exercise 2.35
+(define (count-leaves-acc t)
+  (accumulate + 0
+              (map
+               (lambda (sub-tree)
+                 (if (not (pair? sub-tree)) 1
+                     (count-leaves-acc sub-tree)))
+               t)))
