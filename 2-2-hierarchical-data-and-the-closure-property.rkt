@@ -79,10 +79,10 @@
   (reverse (iter ls (list l)))) ;(same-parity 1 2 3 4 5 6)
 
 ;;; map over list
-(define (map proc ls)
-  (if (null? ls) nil
-      (cons (proc (car ls))
-            (map proc (cdr ls))))) ;(map (lambda (x) (* x 2)) (list 1 2 3))
+;(define (map proc ls)
+;  (if (null? ls) nil
+;      (cons (proc (car ls))
+;            (map proc (cdr ls))))) ;(map (lambda (x) (* x 2)) (list 1 2 3))
 
 ;;exercise 2.21
 (define (square-list ls)
@@ -284,3 +284,30 @@
       (cons (accumulate op init (map (lambda (ls) (car ls)) seqs))
             (accumulate-n op init (map (lambda (ls) (cdr ls)) seqs)))))
 ; (accumulate-n + 0 '((1 2 3) (4 5 6) (7 8 9) (10 11 12)))
+
+; exercise 2.37
+(define (dot-product v w)
+  (accumulate + 0 (map * v w))) ; the map here is racket version
+
+(define (matrix-*-vector m v)
+  (map (lambda (row) (dot-product row v)) m))
+
+(define (matrix-*-matrix m n)
+  (map (lambda (row)
+         (map (lambda (col)
+                (dot-product row col))
+              (transpose n)))
+       m))
+
+(define (transpose m)
+  (accumulate-n cons nil m))
+;(define v '(1 2 3))
+;(define w '(4 5 6))
+;(dot-product v w)
+;
+;(define m '((1 2 3) (4 5 6)))
+;(matrix-*-vector m v)
+;
+;(define n '((2 1) (2 1) (2 1)))
+;(matrix-*-matrix m n)
+;(transpose m)
