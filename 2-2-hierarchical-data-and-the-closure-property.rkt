@@ -77,3 +77,9 @@
             (iter (cdr elems) (cons (car elems) res))
             (iter (cdr elems) res))))
   (reverse (iter ls (list l)))) ;(same-parity 1 2 3 4 5 6)
+
+;;; map over list
+(define (map proc ls)
+  (if (null? ls) nil
+      (cons (proc (car ls))
+            (map proc (cdr ls))))) ;(map (lambda (x) (* x 2)) (list 1 2 3))
