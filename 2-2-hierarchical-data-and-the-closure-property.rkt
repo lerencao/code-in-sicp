@@ -260,3 +260,10 @@
 (define (length-acc sequence)
   (accumulate (lambda (x y) (+ y 1)) 0 sequence))
 ;(length-acc '(1 2 3))
+
+; exercise 2.34
+(define (horner-eval x coeffs)
+  (accumulate (lambda (c mem) (+ c (* mem x)))
+              0
+              coeffs))
+; (horner-eval 2 '(1 3 0 5 0 1))
