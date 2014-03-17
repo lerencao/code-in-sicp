@@ -125,3 +125,14 @@
 '(1 2 3 4 5 6)
 '((1 2 3) 4 5 6)
 '((1 2 3) (4 5 6))
+
+; exercise 2.27
+(define (deep-reverse ls)
+  (cond ((null? ls) nil)
+        ((pair? (car ls))
+         (append (deep-reverse (cdr ls))
+                 (deep-reverse (car ls))))
+        (else (append (deep-reverse (cdr ls))
+                      (list (car ls))))))
+; (deep-reverse (list 1 2 3))
+; (deep-reverse '(1 (2 3) ((4 5) 6)))
