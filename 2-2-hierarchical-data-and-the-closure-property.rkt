@@ -44,3 +44,10 @@
   (cond ((null? ls) (error "empty list"))
         ((null? (cdr ls)) ls)
         (else (last-pair (cdr ls))))) ;(last-pair (list 1 2))
+
+;; exercise 2.18
+(define (reverse ls)
+  (if (null? ls)
+      nil
+      (append (reverse (cdr ls))
+              (list (car ls))))) ;(reverse (list 1 2))
