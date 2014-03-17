@@ -95,3 +95,10 @@
 
 ;; exercise 2.22
 ; wrong usage of form cons
+
+; exercise 2.23
+(define (for-each proc ls)
+  (cond ((not (null? ls))
+         (proc (car ls))
+         (for-each proc (cdr ls)))))
+; (for-each (lambda (x) (newline) (display x)) '(1 2 3))
