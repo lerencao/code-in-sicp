@@ -318,9 +318,10 @@
     (if (null? rest) result
         (iter (op result (car rest)) (cdr rest))))
   (iter initial sequence))
-; the position of arguments of op doesn't affect the result.
-; that's (op a b) = (op b a)
 (define fold-right accumulate)
+; two conditions.
+; 1. op is a monoid.
+; 2. op(init, a) = op(a, init).
 
 ; exercise 2.39
 (define (reverse-r sequence)
