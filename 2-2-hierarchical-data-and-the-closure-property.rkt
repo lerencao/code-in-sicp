@@ -136,3 +136,12 @@
                       (list (car ls))))))
 ; (deep-reverse (list 1 2 3))
 ; (deep-reverse '(1 (2 3) ((4 5) 6)))
+
+; exercise 2.28
+(define (fringe tree)
+  (cond ((null? tree) nil)
+        ((not (pair? tree)) (list tree))
+        (else (append (fringe (car tree))
+                      (fringe (cdr tree))))))
+; (fringe '((1 2) (3 4)))
+; (fringe '(((1 2) (3 4)) ((1 2) (3 4))))
