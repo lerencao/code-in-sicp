@@ -92,3 +92,6 @@
 (define (square-list-map ls)
   (map (lambda (x) (* x x)) ls))
 ; (square-list-map '(1 2 3))
+
+;; exercise 2.22
+; wrong usage of form cons
