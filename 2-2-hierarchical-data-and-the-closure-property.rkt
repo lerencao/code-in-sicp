@@ -355,3 +355,12 @@
 (define (odd-sum-pairs n)
   (map make-pair-sum
        (filter odd-sum? (pairs n))))
+
+(define (permutations seq)
+  (if (null? seq) (list nil)
+      (flat-map (lambda (x)
+                  (map (lambda (p) (cons x p))
+                       (permutations (remove x seq))))
+                seq)))
+(define (remove x s)
+  (filter (lambda (e) (not (= e x))) s))
