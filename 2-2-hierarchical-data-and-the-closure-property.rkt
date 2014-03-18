@@ -328,3 +328,30 @@
   (fold-right (lambda (x y) (append y (list x))) nil sequence))
 (define (reverse-l sequence)
   (fold-left (lambda (x y) (cons y x)) nil sequence))
+
+;;; nest mapping
+;(define (pairs n)
+;  (accumulate append nil
+;              (map (lambda (i)
+;                     (map (lambda (j) (list j i))
+;                          (enumerate-interval 1 (- i 1))))
+;                   (enumerate-interval 1 n))))
+
+(define (flat-map proc seq)
+  (accumulate append nil (map proc seq)))
+
+(define (pairs n)
+  (flat-map (lambda (i)
+              (map (lambda (j) (list i j))
+                   (enumerate-interval 1 (- i 1))))
+            (enumerate-interval 1 n)))
+
+(define (odd-sum? pair)
+  (odd? (+ (car pair) (cadr pair))))
+
+(define (make-pair-sum pair)
+  (list (car pair) (cadr pair) (+ (car pair) (cadr pair))))
+
+(define (odd-sum-pairs n)
+  (map make-pair-sum
+       (filter odd-sum? (pairs n))))
