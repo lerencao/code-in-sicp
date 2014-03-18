@@ -367,3 +367,24 @@
 
 ;; exercise 2.40
 (define unique-pairs pairs)
+
+;; exercise 2.44
+(define (triples n)
+  (flat-map (lambda (i)
+              (flat-map (lambda (j)
+                          (map (lambda (k) (list i j k))
+                               (enumerate-interval (+ j 1) n)))
+                        (enumerate-interval (+ i 1) n)))
+            (enumerate-interval 1 n)))
+; another way, use pairs for simplicity
+(define (triples-e n)
+  (flat-map (lambda (p)
+              (map (lambda (k) (cons k p))
+                   (enumerate-interval (+ (car p) 1) n)))
+            (pairs n)))
+
+(define (sum-triples n s)
+  (define (sum-equal? seq)
+    (let ((acc (accumulate + 0 seq)))
+      (= s acc)))
+  (filter sum-equal? (triples-e n)))
