@@ -364,3 +364,6 @@
                 seq)))
 (define (remove x s)
   (filter (lambda (e) (not (= e x))) s))
+
+;; exercise 2.40
+(define unique-pairs pairs)
