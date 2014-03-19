@@ -388,3 +388,43 @@
     (let ((acc (accumulate + 0 seq)))
       (= s acc)))
   (filter sum-equal? (triples-e n)))
+
+;; exercise 2.42
+(define (queens board-size)
+  (define (queen-cols k)
+    (if (= k 0) (list empty-board)
+        (filter (lambda (positions) (safe? k positions))
+                (flat-map (lambda (rest-of-queens)
+                            (map (lambda (new-row)
+                                   (adjoin-position new-row k rest-of-queens))
+                                 (enumerate-interval 1 board-size)))
+                          (queen-cols (- k 1))))))
+  (queen-cols board-size))
+
+(define empty-board nil)
+(define (adjoin-position row k rest-of-queens)
+  (cons (list k row) rest-of-queens))
+(define (safe? k positions)
+  (define (safe-with? q1 q2) ; test whether two queens satisfy the three conditions
+    (cond ((= (car q1) (car q2)) false) ; same column
+          ((= (cadr q1) (cadr q2)) false) ; same row
+          ((= (abs (- (car q1) (car q2)))
+              (abs (- (cadr q1) (cadr q2))))
+           false) ; diagonal
+          (else true)))
+  (let ((to-check (find-first (lambda (p) (= (car p) k)) positions)))
+    (let ((checked (remove-all (lambda (p) (= (car p) k)) positions)))
+      (all? (lambda (p) (safe-with? to-check p)) checked))))
+
+; helper methods for eight-queens
+(define (find-first pred seq) ; find first elem who satisfies pred
+  (if (pred (car seq)) (car seq)
+      (find-first pred (cdr seq))))
+(define (remove-all pred seq) ; remove all elems who satisfy pred
+  (cond ((null? seq) seq)
+        ((pred (car seq)) (remove-all pred (cdr seq)))
+        (else (cons (car seq) (remove-all pred (cdr seq))))))
+(define (all? pred seq) ; test whether all elems in seq satisfy pred
+  (if (null? (filter (lambda (e) (not (pred e))) seq))
+      true
+      false))
