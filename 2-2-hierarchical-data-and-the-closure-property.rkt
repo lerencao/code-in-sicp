@@ -368,7 +368,7 @@
 ;; exercise 2.40
 (define unique-pairs pairs)
 
-;; exercise 2.44
+;; exercise 2.41
 (define (triples n)
   (flat-map (lambda (i)
               (flat-map (lambda (j)
