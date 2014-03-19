@@ -428,3 +428,7 @@
   (if (null? (filter (lambda (e) (not (pred e))) seq))
       true
       false))
+
+;; exercise 2.43
+; queen-cols would be called repeatedly, which causes too much computation.
+; it will take T*k^k.
