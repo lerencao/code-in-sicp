@@ -24,3 +24,12 @@
 (pair? (car '(a short list)))
 (memq 'red '((red shoes) (blue socks)))
 (memq 'red '(red shoes blue socks))
+
+;; exercise 2.54
+(define (equal? x y)
+  (cond ((and (symbol? x) (symbol? y)) (eq? x y))
+        ((and (list? x) (list? y))
+         (cond ((and (null? x) (null? y)) true)
+               ((or (null? x) (null? y)) false)
+               (else (and (equal? (car x) (car y))
+                          (equal? (cdr x) (cdr y))))))))
