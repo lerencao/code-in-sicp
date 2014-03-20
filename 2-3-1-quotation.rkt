@@ -33,3 +33,7 @@
                ((or (null? x) (null? y)) false)
                (else (and (equal? (car x) (car y))
                           (equal? (cdr x) (cdr y))))))))
+
+;; exercise 2.54
+; the quotation is just a single-character abbr for wrapping the next complete expression with quote to form (quote <expression>).
+; ''asd => (quote (quote asd))
