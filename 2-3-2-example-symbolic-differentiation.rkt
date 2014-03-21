@@ -21,16 +21,30 @@
 ; representing algebraic expressions
 (define (variable? x) (symbol? x))
 (define (same-variable? x y) (and (variable? x) (variable? y) (eq? x y)))
-(define (sum? e) (and (pair? e) (eq? (cadr e) '+)))
+(define (sum? e)
+  (cond ((null? e) false)
+        ((eq? (car e) '+) true)
+        (else (sum? (cdr e)))))
 (define (make-sum x y)
   (cond ((=number? x 0) y)
         ((=number? y 0) x)
         ((and (number? x) (number? y)) (+ x y))
         (else (list x  '+ y))))
 (define (=number? exp num) (and (number? exp) (= exp num)))
-(define (addend e) (car e))
-(define (augend e) (caddr e))
-(define (product? e) (and (pair? e) (eq? (cadr e) '*)))
+(define (addend e)
+  (define (prefix e)
+    (cond ((eq? (car e) '+) nil)
+          (else (cons (car e) (prefix (cdr e))))))
+  (let ((pre (prefix e)))
+    (if (null? (cdr pre)) (car pre) pre)))
+(define (augend e)
+  (define (postfix e)
+    (cond ((eq? (car e) '+) (cdr e))
+          (else (postfix (cdr e)))))
+  (let ((post (postfix e)))
+    (if (null? (cdr post)) (car post) post)))
+
+(define (product? e) (and (pair? e) (not (sum? e)) (eq? (cadr e) '*)))
 (define (make-product x y)
   (cond ((or (=number? x 0) (=number? y 0)) 0)
         ((=number? x 1) y)
@@ -38,7 +52,9 @@
         ((and (number? x) (number? y)) (* x y))
         (else (list x '* y))))
 (define (multiplier e) (car e))
-(define (multiplicand e) (caddr e))
+(define (multiplicand e)
+  (let ((right (cdr (cdr e))))
+    (if (null? (cdr right)) (car right) right)))
 
 ; exercise 2.56
 (define (exponentiation? exp) (and (pair? exp) (eq? (car exp) '**)))
@@ -55,3 +71,4 @@
 ; exercise 2.58
 
 ; a, see file changes...
+; b, see file changes...
