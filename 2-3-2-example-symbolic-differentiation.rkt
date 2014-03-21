@@ -11,6 +11,11 @@
                                         (multiplicand exp))
                           (make-product (deriv (multiplicand exp) var)
                                         (multiplier exp))))
+        ((exponentiation? exp)
+         (make-product
+           (make-product (exponent exp)
+                         (make-exponentiation (base exp) (- (exponent exp) 1)))
+           (deriv (base exp) var)))
         (else (error "Unknown expression type" exp))))
 
 ; representing algebraic expressions
@@ -34,3 +39,12 @@
         (else (list '* x y))))
 (define (multiplier e) (cadr e))
 (define (multiplicand e) (caddr e))
+
+; exercise 2.56
+(define (exponentiation? exp) (and (pair? exp) (eq? (car exp) '**)))
+(define (base exp) (cadr exp))
+(define (exponent exp) (caddr exp))
+(define (make-exponentiation base exponent)
+  (cond ((= exponent 0) 1)
+        ((= exponent 1) base)
+        (else (list '** base exponent))))
