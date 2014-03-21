@@ -29,7 +29,11 @@
         (else (list '+ x y))))
 (define (=number? exp num) (and (number? exp) (= exp num)))
 (define (addend e) (cadr e))
-(define (augend e) (caddr e))
+(define (augend e)
+  (let ((right (cdr (cdr e))))
+    (if (null? (cdr right))
+        (car right)
+        (cons '+ right))))
 (define (product? e) (and (pair? e) (eq? (car e) '*)))
 (define (make-product x y)
   (cond ((or (=number? x 0) (=number? y 0)) 0)
@@ -38,7 +42,11 @@
         ((and (number? x) (number? y)) (* x y))
         (else (list '* x y))))
 (define (multiplier e) (cadr e))
-(define (multiplicand e) (caddr e))
+(define (multiplicand e)
+  (let ((right (cdr (cdr e))))
+    (if (null? (cdr right))
+        (car right)
+        (cons '* right))))
 
 ; exercise 2.56
 (define (exponentiation? exp) (and (pair? exp) (eq? (car exp) '**)))
@@ -48,3 +56,6 @@
   (cond ((= exponent 0) 1)
         ((= exponent 1) base)
         (else (list '** base exponent))))
+
+; exercise 2.57
+; see file changes...
