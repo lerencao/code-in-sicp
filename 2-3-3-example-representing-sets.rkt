@@ -67,8 +67,8 @@
 (define (element-of-set? x set)
   (cond ((null? set) false)
         ((= (entry set) x) true)
-        ((< (entry set) x) (element-of-sets? x (right-branch set)))
-        ((> (entry set) x) (element-of-sets? x (left-branch set)))))
+        ((< (entry set) x) (element-of-set? x (right-branch set)))
+        ((> (entry set) x) (element-of-set? x (left-branch set)))))
 
 (define (adjoin-set x set)
   (cond ((null? set) (make-tree x '() '()))
@@ -79,3 +79,20 @@
         ((> x (entry set)) (make-tree (entry set)
                                      (left-branch set)
                                      (adjoin-set x (right-branch set))))))
+
+; exercise 2.63
+(define (tree->list-1 tree)
+  (if (null? tree) '()
+      (append (tree->list-1 (left-branch tree))
+              (cons (entry tree) (tree->list-1 (right-branch tree))))))
+(define (tree->list-2 tree)
+  (define (copy-to-list tree result-list)
+    (if (null? tree) result-list
+        (copy-to-list (left-branch tree)
+                      (cons (entry tree)
+                            (copy-to-list (right-branch tree) result-list)))))
+  (copy-to-list tree '()))
+
+; the two procedures produce the same result. (a)
+; list for figure 2.16 is (1 3 5 7 9 11)
+; and they have same order of growth. (b)
