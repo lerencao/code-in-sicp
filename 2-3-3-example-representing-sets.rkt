@@ -118,3 +118,20 @@
 ; use the left to construct entry and right tree.
 
 ; b, lg(n)
+
+; exercise 2.65
+(define (union-set seta setb)
+  (cond ((null? seta) setb)
+        ((null? setb) seta)
+        (else (let ((lsta (tree->list-1 seta))
+                    (lstb (tree->list-1 setb)))
+                ; use union-set for ordered list
+                (let ((unioned-list (union-set lsta lstb)))
+                  (list->tree unioned-list))))))
+(define (intersection-set seta setb)
+  (cond ((or (null? seta) (null? setb)) nil)
+        (else (let ((lsta (tree->list-1 seta))
+                    (lstb (tree->list-1 setb)))
+                ; use intersection-set for ordered list
+                (let ((intersectioned-list (intersection-set lsta lstb)))
+                  (list->tree intersectioned-list))))))
