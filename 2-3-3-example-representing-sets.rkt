@@ -135,3 +135,30 @@
                 ; use intersection-set for ordered list
                 (let ((intersectioned-list (intersection-set lsta lstb)))
                   (list->tree intersectioned-list))))))
+
+; sets and information retrieval
+; lookup for unordered set
+(define (lookup given-key set-of-records)
+  (cond ((null? set-of-records) false)
+        ((equal? given-key (key (car set-of-records)))
+         (car set-of-records))
+        (else (lookup given-key (cdr set-of-records)))))
+
+; lookup for ordered set
+(define (lookup given-key set-of-records)
+  (cond ((null? set-of-records) false)
+        ((< given-key (key (car set-of-records))) false)
+        ((equal? given-key (key (car set-of-records)))
+         (car set-of-records))
+        ((> given-key (key (car set-of-records)))
+         (lookup given-key (cdr set-of-records)))))
+
+; lookup for binary tree set
+(define (lookup given-key set-of-records)
+  (cond ((null? set-of-records) false)
+        ((< given-key (key (entry set-of-records)))
+         (lookup given-key (left-branch set-of-records)))
+        ((equal? given-key (key (entry set-of-records)))
+         (entry set-of-records))
+        ((> given-key (key (entry set-of-records)))
+         (lookup given-key (right-branch set-of-records)))))
