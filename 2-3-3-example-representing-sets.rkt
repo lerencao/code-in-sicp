@@ -19,3 +19,12 @@
         (else (element-of-set? e (cdr set)))))
 (define (adjoin-set e set)
   (if (element-of-set? e set) set (cons e set)))
+
+; exercise 2.60
+; change adjoin-set to the follows, and others remain the same.
+; (define (adjoin-set e set)
+  ; (cons e set))
+; as for efficiency, all but the adjoin-set is worse.
+; multiset can be used here for duplicate elements.
+; application: the multiset of prime factors of a number n.
+; for number 120, the result is {2, 2, 2, 3, 5}
