@@ -95,3 +95,7 @@
     SHA BOOM))
 ; (display (encode msg code-tree)) => length = 84
 ; if we use fixed-length code, the length will be 3 * (3+9+3+9+10+2) = 108
+
+; exercise 2.71
+; for the most frequent symbol, bits = 1
+; for the least frequent symbol, bits = n - 1
