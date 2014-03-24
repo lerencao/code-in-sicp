@@ -54,4 +54,21 @@
                                   (make-code-tree (make-leaf 'D 1)
                                                   (make-leaf 'C 1)))))
 (define sample-message '(0 1 1 0 0 1 0 1 0 1 1 1 0))
-; the result is (A D A B B C A)
+; the result is (a d a b b c a)
+
+; exercise 2.68
+(define (encode msg tree)
+  (if (null? msg) nil
+      (append (encode-symbol (car msg) tree)
+              (encode (cdr msg) tree))))
+(define (encode-symbol sym tree)
+  (cond ((pair? (member sym (symbols (left-branch tree))))
+         (if (leaf? (left-branch tree))
+             '(0)
+             (cons 0 (encode-symbol sym (left-branch tree)))))
+        ((pair? (member sym (symbols (right-branch tree))))
+         (if (leaf? (right-branch tree))
+             '(1)
+             (cons 1 (encode-symbol sym (right-branch tree)))))
+        (else (error "bad symbol: ENCODE-SYMBOL" sym))))
+; (display (encode '(a d a  b b c a) sample-tree))
