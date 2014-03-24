@@ -82,3 +82,16 @@
         (else (successive-merge
                (adjoin-set (make-code-tree (car node-set) (cadr node-set))
                            (cdr (cdr node-set)))))))
+
+; exercse 2.70
+(define rock-songs-pairs '((A 2) (GET 2) (SHA 3) (WAH 1) (BOOM 1) (JOB 2) (NA 16) (YIP 9)))
+(define code-tree (generate-huffman-tree rock-songs-pairs))
+(define msg
+  '(GET A JOB
+    SHA NA NA NA NA NA NA NA NA
+    GET A JOB
+    SHA NA NA NA NA NA NA NA NA
+    WAH YIP YIP YIP YIP YIP YIP YIP YIP YIP
+    SHA BOOM))
+; (display (encode msg code-tree)) => length = 84
+; if we use fixed-length code, the length will be 3 * (3+9+3+9+10+2) = 108
