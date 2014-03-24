@@ -72,3 +72,13 @@
              (cons 1 (encode-symbol sym (right-branch tree)))))
         (else (error "bad symbol: ENCODE-SYMBOL" sym))))
 ; (display (encode '(a d a  b b c a) sample-tree))
+
+; exercise 2.69
+(define (generate-huffman-tree pairs)
+  (successive-merge (make-leaf-set pairs)))
+(define (successive-merge node-set)
+  (cond ((null? node-set) (error "empty node set: successive-merge"))
+        ((null? (cdr node-set)) (car node-set))
+        (else (successive-merge
+               (adjoin-set (make-code-tree (car node-set) (cadr node-set))
+                           (cdr (cdr node-set)))))))
