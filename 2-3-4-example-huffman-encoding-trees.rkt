@@ -99,3 +99,11 @@
 ; exercise 2.71
 ; for the most frequent symbol, bits = 1
 ; for the least frequent symbol, bits = n - 1
+
+; exercise 2.72
+; for the least symbol, the order of growth is n.
+; searching down to the the last floor of the code tree.
+; for the most frequent symbol, the order of growth is still n.
+; search the symbol list to the end...
+; as for the middle symbol, the order is
+; n + n/2 + n/4 + ...
