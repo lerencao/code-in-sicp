@@ -113,3 +113,19 @@
 
 ; d
 ; install one package, implement all operators in the package.
+
+
+; exercise 2.74
+(define (install-division-package)
+  (define (get-record employee-name personnel-records)
+    (cons 'division-name '(self implementation)))
+  (put 'get-record 'division-name get-record)
+  (define (get-salary record) (car record))
+  (put 'get-salary 'division-name get-salary)
+  'done)
+
+(define (get-record employee-name persionnel-file)
+  ((get 'get-record (car persionnel-records)) employee-name (cadr personnel-records)))
+
+(define (get-salary employee-record)
+  ((get 'get-salary (car employee-record)) (cadr employee-record)))
