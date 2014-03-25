@@ -74,3 +74,42 @@
   ((get 'make-from-real-imag 'rectangular) x y))
 (define (make-from-mag-ang r a)
   ((get 'make-from-mag-ang 'polar) r a))
+
+; exercise 2.73
+(define (deriv exp var)
+  (cond ((number? exp) 0)
+        ((variable? exp) (if (same-variable? exp var) 1 0))
+        (else ((get 'deriv (operator exp))
+               (operands exp) var))))
+(define (operator exp) (car exp))
+(define (operands exp) (cdr exp))
+
+; a, they has no operands
+
+; b
+(define (install-sum-package)
+  (define (deriv-sum operands var)
+    (+ (deriv (car operands) var)
+       (deriv (cadr operands) var)))
+  (put 'deriv '+ deriv-sum)
+  'done)
+(define (install-product-package)
+  (define (deriv-product operands var)
+    (let ((left (car operands))
+          (right (cadr operands)))
+      (+ (* (deriv left) right)
+         (* (deriv right) left))))
+  (put 'deriv '* deriv-product))
+
+; c
+
+(define (install-exponent-package)
+  (define (deriv-exponent operands var)
+    (let ((base (car operands))
+          (exp (cadr operands)))
+      (* exp ('** base (- exp 1)) (deriv base var))))
+  (put 'deriv '** deriv-exponent)
+  'done)
+
+; d
+; install one package, implement all operators in the package.
