@@ -167,6 +167,10 @@
                        (- (angle z1) (angle z2))))
   ;; interface to rest of the system
   (define (tag z) (attach-tag 'complex z))
+  (put 'real-part '(complex) real-part)
+  (put 'imag-part '(complex) imag-part)
+  (put 'magnitude '(complex) magnitude)
+  (put 'angle '(complex) angle)
   (put 'add '(complex complex)
        (lambda (z1 z2) (tag (add-complex z1 z2))))
   (put 'sub '(complex complex)
@@ -189,3 +193,8 @@
 (install-scheme-number-package)
 (install-rational-package)
 (install-complex-package)
+
+;; exercise 2.77
+; see file changes, and uncomment the following lines to run.
+; (define (magnitude z) (apply-generic 'magnitude z))
+; (magnitude (make-complex-from-real-imag 3 4))
