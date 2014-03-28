@@ -33,6 +33,7 @@
 (define (sub x y) (apply-generic 'sub x y))
 (define (mul x y) (apply-generic 'mul x y))
 (define (div x y) (apply-generic 'div x y))
+(define (equ? x y) (apply-generic 'equ? x y))
 
 ; package handling ordinary numbers
 (define (install-scheme-number-package)
@@ -45,6 +46,8 @@
        (lambda (x y) (tag (* x y))))
   (put 'div '(scheme-number scheme-number)
        (lambda (x y) (tag (/ x y))))
+  (put 'equ? '(scheme-number scheme-number)
+       (lambda (x y) (= x y)))
   'done)
 
 
@@ -71,8 +74,12 @@
   (define (div-rat x y)
     (make-rat (* (numer x) (denom y))
               (* (denom x) (numer y))))
+  (define (equ? x y)
+    (and (= (numer x) (numer y))
+         (= (denom x) (denom y))))
   ;; interface to rest of the system
   (define (tag x) (attach-tag 'rational x))
+  (put 'equ? '(rational rational) equ?)
   (put 'add '(rational rational)
        (lambda (x y) (tag (add-rat x y))))
   (put 'sub '(rational rational)
@@ -152,6 +159,9 @@
   (define (make-from-mag-ang r a)
     ((get 'make-from-mag-ang 'polar) r a))
   ;; internal procedures
+  (define (equ? x y)
+    (and (= (real-part x) (real-part y))
+         (= (imag-part x) (imag-part y))))
   (define (add-complex z1 z2)
     (make-from-real-imag (+ (real-part z1) (real-part z2))
                          (+ (imag-part z1) (imag-part z2))))
@@ -170,6 +180,7 @@
   (put 'imag-part '(complex) imag-part)
   (put 'magnitude '(complex) magnitude)
   (put 'angle '(complex) angle)
+  (put 'equ? '(complex complex) equ?)
   (put 'add '(complex complex)
        (lambda (z1 z2) (tag (add-complex z1 z2))))
   (put 'sub '(complex complex)
@@ -201,3 +212,18 @@
 ;; exercise 2.78
 ; see file changes, and uncomment the following line to test
 ; (add 1 2)
+
+;; exercise 2.79
+;; see file changes, and uncomment the following lines to test
+;; (equ? 1 2)
+;; (equ? 1 1)
+;; (equ? (make-rational 1 2) (make-rational 1 2))
+;; (equ? (make-rational 1 2) (make-rational 2 4))
+;; (equ? (make-rational 1 2) (make-rational 1 3))
+
+;; (equ? (make-complex-from-mag-ang 1 2) (make-complex-from-mag-ang 1 2))
+;; (equ? (make-complex-from-mag-ang 1 2) (make-complex-from-mag-ang 1 3))
+;; (equ? (make-complex-from-real-imag 1 2) (make-complex-from-real-imag 1 2))
+;; (equ? (make-complex-from-real-imag 1 2) (make-complex-from-real-imag 1 3))
+
+;; (equ? (make-rational 1 2) (make-complex-from-mag-ang 1 2)) ; an error will occur
