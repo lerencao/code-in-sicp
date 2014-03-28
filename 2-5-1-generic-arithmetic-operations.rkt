@@ -34,6 +34,7 @@
 (define (mul x y) (apply-generic 'mul x y))
 (define (div x y) (apply-generic 'div x y))
 (define (equ? x y) (apply-generic 'equ? x y))
+(define (=zero? z) (apply-generic '=zero? z))
 
 ; package handling ordinary numbers
 (define (install-scheme-number-package)
@@ -48,6 +49,7 @@
        (lambda (x y) (tag (/ x y))))
   (put 'equ? '(scheme-number scheme-number)
        (lambda (x y) (= x y)))
+  (put '=zero? '(scheme-number) (lambda (z) (= z 0)))
   'done)
 
 
@@ -77,9 +79,12 @@
   (define (equ? x y)
     (and (= (numer x) (numer y))
          (= (denom x) (denom y))))
+  (define (=zero? z)
+    (= (numer z) 0))
   ;; interface to rest of the system
   (define (tag x) (attach-tag 'rational x))
   (put 'equ? '(rational rational) equ?)
+  (put '=zero? '(rational) =zero?)
   (put 'add '(rational rational)
        (lambda (x y) (tag (add-rat x y))))
   (put 'sub '(rational rational)
@@ -162,6 +167,9 @@
   (define (equ? x y)
     (and (= (real-part x) (real-part y))
          (= (imag-part x) (imag-part y))))
+  (define (=zero? z)
+    (and (= (real-part z) 0)
+         (= (imag-part z) 0)))
   (define (add-complex z1 z2)
     (make-from-real-imag (+ (real-part z1) (real-part z2))
                          (+ (imag-part z1) (imag-part z2))))
@@ -176,6 +184,7 @@
                        (- (angle z1) (angle z2))))
   ;; interface to rest of the system
   (define (tag z) (attach-tag 'complex z))
+  (put '=zero? '(complex) =zero?)
   (put 'real-part '(complex) real-part)
   (put 'imag-part '(complex) imag-part)
   (put 'magnitude '(complex) magnitude)
@@ -227,3 +236,10 @@
 ;; (equ? (make-complex-from-real-imag 1 2) (make-complex-from-real-imag 1 3))
 
 ;; (equ? (make-rational 1 2) (make-complex-from-mag-ang 1 2)) ; an error will occur
+
+;; exercise 2.80
+;; see file changes, and uncomment the following lines to test
+;; (=zero? 1)
+;; (=zero? 0)
+;; (=zero? (make-rational 0 1))
+;; (=zero? (make-complex-from-real-imag 0 0))
