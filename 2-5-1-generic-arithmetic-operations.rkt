@@ -7,15 +7,17 @@
   (hash-ref table (cons op type-tags) false))
 
 (define (attach-tag type-tag contents)
-  (cons type-tag contents))
+  (if (number? contents)
+      contents
+      (cons type-tag contents)))
 (define (type-tag datum)
-  (if (pair? datum)
-      (car datum)
-      (error "Bad tagged datum: TYPE-TAG" datum)))
+  (cond ((number? datum) 'scheme-number)
+        ((pair? datum) (car datum))
+        (else (error "Bad tagged datum: TYPE-TAG" datum))))
 (define (contents datum)
-  (if (pair? datum)
-      (cdr datum)
-      (error "Bad tagged datum: CONTENTS" datum)))
+  (cond ((number? datum) datum)
+        ((pair? datum) (cdr datum))
+        (else (error "Bad tagged datum: CONTENTS" datum))))
 
 (define (apply-generic op . args)
   (let ((type-tags (map type-tag args)))
@@ -43,11 +45,8 @@
        (lambda (x y) (tag (* x y))))
   (put 'div '(scheme-number scheme-number)
        (lambda (x y) (tag (/ x y))))
-  (put 'make 'scheme-number (lambda (x) (tag x)))
   'done)
 
-(define (make-scheme-number n)
-  ((get 'make 'scheme-number) n))
 
 
 ; package handling rational numbers
@@ -198,3 +197,7 @@
 ; see file changes, and uncomment the following lines to run.
 ; (define (magnitude z) (apply-generic 'magnitude z))
 ; (magnitude (make-complex-from-real-imag 3 4))
+
+;; exercise 2.78
+; see file changes, and uncomment the following line to test
+; (add 1 2)
