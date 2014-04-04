@@ -28,3 +28,11 @@
           ((eq? m 'deposit) deposit)
           (else (error "Unkown request: MAKE-ACCOUNT" m ))))
   dispatch)
+
+
+;;; accumulator
+(define (make-accumulator init)
+  (let ((acc init))
+    (lambda (num)
+      (set! acc (+ acc num))
+      acc)))
