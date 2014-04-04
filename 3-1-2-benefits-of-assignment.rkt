@@ -1,10 +1,12 @@
 #lang racket
 
-;; (define rand
-;;   (let ((x random-init))
-;;     (lambda ()
-;;       (set! x (rand-update x))
-;;       x)))
+(define rand
+  (let ((x random-init))
+    (lambda (signal)
+      (cond ((eq? 'generate) (set! x random-init))
+            ((eq? 'reset) (lambda (new-value) (set! x new-value)))
+            (else (set! x (rand-update x))))
+      x)))
 
 ;; (define (estimate-pi trials)
 ;;   (sqrt (/ 6 (monte-carlo trials cesaro-test))))
