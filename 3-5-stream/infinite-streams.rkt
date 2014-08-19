@@ -1,6 +1,7 @@
 #lang racket
 
 (provide integers no-sevens fibs primes)
+(provide add-streams)
 ;;; infinite integers from 1
 (define (integers-starting-from n)
   (stream-cons n (integers-starting-from (+ n 1))))
