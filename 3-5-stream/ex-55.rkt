@@ -6,3 +6,5 @@
    (stream-first s)
    (add-streams (partial-sums s)
                (stream-rest s))))
+
+(provide partial-sums)
