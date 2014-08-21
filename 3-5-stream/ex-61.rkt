@@ -2,6 +2,7 @@
 
 (require "ex-60.rkt")
 
+(provide invert-unit-series)
 (define (invert-unit-series s)
   (stream-cons
    1

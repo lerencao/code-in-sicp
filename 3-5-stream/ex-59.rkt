@@ -20,3 +20,5 @@
 (define sine-series
   (stream-cons 0
                ((integrate-series cosine-series))))
+
+(provide sine-series cosine-series)
