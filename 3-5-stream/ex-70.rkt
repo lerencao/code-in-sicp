@@ -12,15 +12,9 @@
        (cond [(< weighted-s1car weighted-s2car)
               (stream-cons s1car
                            (merge-weighted (stream-rest s1) s2 weight))]
-             [(> weighted-s1car weighted-s2car)
-              (stream-cons s2car
-                           (merge-weighted s1 (stream-rest s2) weight))]
              [else
-              (stream-cons s1car
-                           (merge-weighted
-                            (stream-rest s1)
-                            (stream-rest s2)
-                            weight))]))]))
+              (stream-cons s2car
+                           (merge-weighted s1 (stream-rest s2) weight))]))]))
 
 (define (weighted-pair s1 s2 weight)
   (stream-cons
@@ -56,3 +50,6 @@
            (+ (* 2 (car lst))
               (* 3 (cadr lst))
               ( * 5 (car lst) (cadr lst))))))
+
+
+(provide merge-weighted weighted-pair integers)
