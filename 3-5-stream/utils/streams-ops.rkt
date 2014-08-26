@@ -19,4 +19,4 @@
 
 
 
-(provide scale-stream add-streams)
+(provide scale-stream add-streams stream-map-extended)
